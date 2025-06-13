@@ -7,49 +7,62 @@
   <style>
     body {
       font-family: "Segoe UI", sans-serif;
-      background: #eef2f5;
+      background: #e8f1f8;
       padding: 40px;
+      color: #2c3e50;
     }
 
     .container {
-      max-width: 1000px;
+      max-width: 1100px;
       margin: auto;
       background: white;
       padding: 30px;
       border-radius: 12px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
     }
 
     h1 {
       text-align: center;
-      color: #2c3e50;
-      margin-bottom: 20px;
-    }
-
-    .top-inputs {
-      display: flex;
-      justify-content: center;
-      gap: 30px;
+      color: #1e3d59;
       margin-bottom: 30px;
     }
 
-    .top-inputs label {
+    .input-flex-container {
+      display: flex;
+      justify-content: space-between;
+      gap: 40px;
+      margin-bottom: 30px;
+    }
+
+    .left-inputs,
+    .right-inputs {
+      flex: 1;
+    }
+
+    .left-inputs div,
+    .right-inputs div {
+      margin-bottom: 18px;
+    }
+
+    label {
       font-weight: 600;
-      margin-right: 8px;
+      display: block;
+      margin-bottom: 4px;
     }
 
-    .top-inputs input {
-      width: 120px;
-      padding: 6px 10px;
+    input, select {
+      width: 100%;
+      max-width: 260px;
+      padding: 7px 10px;
       border-radius: 6px;
-      border: 1px solid #ccc;
+      border: 1px solid #a0bcd2;
       font-size: 1rem;
-      text-align: center;
+      color: #1e3d59;
     }
 
-    .top-inputs input[readonly] {
-      background-color: #f0f0f0;
-      color: #555;
+    input[readonly] {
+      background-color: #f0f6fb;
+      color: #666;
     }
 
     .unit-selector {
@@ -59,13 +72,7 @@
     }
 
     .unit-selector label {
-      font-weight: 500;
       margin-right: 10px;
-    }
-
-    select {
-      padding: 6px;
-      border-radius: 6px;
     }
 
     table {
@@ -73,88 +80,94 @@
       border-collapse: collapse;
       text-align: center;
       margin-top: 20px;
+      font-size: 0.95rem;
     }
 
     th, td {
       padding: 12px;
-      border-bottom: 1px solid #ccc;
+      border-bottom: 1px solid #d1e2f3;
     }
 
     th {
-      background-color: #3498db;
+      background-color: #1e90ff;
       color: white;
       text-transform: uppercase;
     }
 
-    input[type="number"] {
-      padding: 6px;
-      width: 100px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-    }
-
     .length-cell {
       font-weight: bold;
-      color: #2980b9;
+      color: #1e6091;
     }
 
     .add-btn {
       margin-top: 20px;
-      background: #2ecc71;
+      background: #007acc;
       color: white;
-      padding: 10px 20px;
+      padding: 10px 24px;
       border: none;
       border-radius: 8px;
       cursor: pointer;
       font-size: 16px;
-      transition: background 0.3s;
     }
 
     .add-btn:hover {
-      background: #27ae60;
+      background: #005fa3;
     }
-    .top-inputs-vertical > div {
-    margin-bottom: 20px;
-  }
-
-  .top-inputs-vertical label {
-    font-weight: 600;
-  }
-
-  .top-inputs-vertical input {
-    width: 100%;
-    max-width: 250px;
-    padding: 6px 10px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    font-size: 1rem;
-    margin-top: 4px;
-  }
-
-  .top-inputs-vertical input[readonly] {
-    background-color: #f0f0f0;
-    color: #555;
-  }
-
   </style>
 </head>
 <body>
 <div class="container">
   <h1>Pipe Designing Tool</h1>
-  <div class="top-inputs-vertical">
-    <div>
-      <label for="mvlInput">Maximum Valve Level:</label>
-      <input type="number" id="mvlInput" placeholder="Enter MVL" />
+  <div class="input-flex-container">
+    <div class="left-inputs">
+      <div>
+        <label for="pipeName">Pipe Name:</label>
+        <select id="pipeName" onchange="updatePipeDetails()">
+          <option value="">Select a pipe</option>
+        </select>
+      </div>
+      <div>
+        <label for="mvlInput">Maximum Valve Level (MVL):</label>
+        <input type="number" id="mvlInput" placeholder="Enter MVL" />
+      </div>
+      <div>
+        <label for="fvlInput">Foot Valve Level (FVL):</label>
+        <input type="number" id="fvlInput" placeholder="Enter FVL" />
+      </div>
+      <div>
+        <label for="terminalHead">Terminal Head:</label>
+        <input type="number" id="terminalHead" placeholder="Enter Terminal Head" />
+      </div>
+      <div>
+        <label for="slInput">Static Level (FVL - MVL + Terminal Head):</label>
+        <input type="number" id="slInput" readonly />
+      </div>
     </div>
-    <div>
-      <label for="fvlInput">Foot Valve Level:</label>
-      <input type="number" id="fvlInput" placeholder="Enter FVL" />
+
+    <div class="right-inputs">
+      <div>
+        <label for="diameter">Diameter (mm):</label>
+        <input type="number" id="diameter" readonly />
+      </div>
+      <div>
+        <label for="area">Pipe Area (m²):</label>
+        <input type="number" id="area" readonly />
+      </div>
+      <div>
+        <label for="crInput">Cr:</label>
+        <input type="number" id="crInput" />
+      </div>
+      <div>
+        <label for="sInput">s:</label>
+        <input type="number" id="sInput" />
+      </div>
+      <div>
+        <label for="vOutput">v:</label>
+        <input type="number" id="vOutput" readonly />
+      </div>
     </div>
-    <div>
-      <label for="slInput">Static Level:</label>
-      <input type="number" id="slInput" readonly placeholder="FVL - MVL" />
-    </div>
-</div>
+  </div>
+
   <div class="unit-selector">
     <label for="unit">Unit:</label>
     <select id="unit" onchange="updateUnitLabels()">
@@ -168,132 +181,173 @@
 
   <table>
     <thead>
-      <tr>
-        <th>#</th>
-        <th>FROM (<span id="fromUnit">m</span>)</th>
-        <th>TO (<span id="toUnit">m</span>)</th>
-        <th>LENGTH (<span id="lengthUnit">m</span>)</th>
-        <th>X</th>
-        <th>Y</th>
-        <th>Z</th>
-        <th>A</th>
-        <th>B</th>
-        <th>C</th>
-        <th>D</th>
-      </tr>
+    <tr>
+      <th>#</th>
+      <th>FROM (<span id="fromUnit">m</span>)</th>
+      <th>TO (<span id="toUnit">m</span>)</th>
+      <th>LENGTH (<span id="lengthUnit">m</span>)</th>
+      <th>V</th>
+      <th>Q(LPM)</th>
+      <th>Type</th>
+      <th>Diameter</th>
+      <th>Area</th>
+      <th>C</th>
+      <th>D</th>
+    </tr>
     </thead>
     <tbody id="tableBody">
-      <!-- Dynamic rows go here -->
+    <!-- Dynamic rows go here -->
     </tbody>
   </table>
 </div>
 
 <script>
-  const conversionFactors = {
-    m: 1,
-    km: 0.001,
-    mm: 1000
-  };
+const pipeData = [
+  { name: "100 DI K7CL", rate: 1230, diameter: 100, pressure: 80 },
+  { name: "100 DI K9CL", rate: 1366, diameter: 100, pressure: 640 },
+  { name: "150 DI K9CL", rate: 1696, diameter: 150, pressure: 80 },
+  { name: "200 DI K7CL", rate: 2182, diameter: 200, pressure: 80 },
+  { name: "200 DI K9CL", rate: 2568, diameter: 200, pressure: 620 },
+  { name: "250 DI K7CL", rate: 2829, diameter: 250, pressure: 80 },
+  { name: "250 DI K9CL", rate: 3340, diameter: 250, pressure: 540 },
+  { name: "300 DI K7CL", rate: 3536, diameter: 300, pressure: 80 },
+  { name: "300 DI K9CL", rate: 4184, diameter: 300, pressure: 490 },
+  { name: "350 DI K7CL", rate: 4334, diameter: 350, pressure: 80 },
+  { name: "350 DI K9CL", rate: 5097, diameter: 350, pressure: 450 },
+  { name: "400 DI K7CL", rate: 5167, diameter: 400, pressure: 80 },
+  { name: "400 DI K9CL", rate: 6080, diameter: 400, pressure: 420 },
+  { name: "450 DI K7CL", rate: 6119, diameter: 450, pressure: 80 },
+  { name: "450 DI K9CL", rate: 7311, diameter: 450, pressure: 400 },
+  { name: "500 DI K7CL", rate: 7184, diameter: 500, pressure: 80 },
+  { name: "500 DI K9CL", rate: 8442, diameter: 500, pressure: 380 },
+  { name: "600 DI K7CL", rate: 9410, diameter: 600, pressure: 80 },
+  { name: "600 DI K9CL", rate: 11113, diameter: 600, pressure: 360 },
+  { name: "700 DI K7CL", rate: 12242, diameter: 700, pressure: 80 },
+  { name: "700 DI K9CL", rate: 13660, diameter: 700, pressure: 340 },
+  { name: "750 DI K7CL", rate: 13993, diameter: 750, pressure: 80 },
+  { name: "750 DI K9CL", rate: 15285, diameter: 750, pressure: 330 },
+  { name: "800 DI K7CL", rate: 15669, diameter: 800, pressure: 100 },
+  { name: "800 DI K9CL", rate: 16971, diameter: 800, pressure: 320 },
+  { name: "900 DI K7CL", rate: 19036, diameter: 900, pressure: 100 },
+  { name: "900 DI K9CL", rate: 20533, diameter: 900, pressure: 310 },
+  { name: "1000 DI K7CL", rate: 23715, diameter: 1000, pressure: 100 },
+  { name: "1000 DI K9CL", rate: 24608, diameter: 1000, pressure: 300 }
+];
 
-  let currentUnit = 'm';
-  let rowCount = 0;
+pipeData.forEach(pipe => {
+  const option = document.createElement("option");
+  option.value = pipe.name;
+  option.textContent = pipe.name;
+  document.getElementById("pipeName").appendChild(option);
+});
 
-  const mvlInput = document.getElementById("mvlInput");
-  const fvlInput = document.getElementById("fvlInput");
+let selectedPipeDetails = null;
+
+function updatePipeDetails() {
+  const pipeName = document.getElementById("pipeName").value;
+  selectedPipeDetails = pipeData.find(p => p.name === pipeName);
+  if (selectedPipeDetails) {
+    const { diameter } = selectedPipeDetails;
+    document.getElementById("diameter").value = diameter;
+    const area = Math.PI * Math.pow(diameter / 2000, 2);
+    document.getElementById("area").value = area.toFixed(4);
+  }
+}
+
+function calculateV() {
+  const cr = parseFloat(document.getElementById("crInput").value);
+  const s = parseFloat(document.getElementById("sInput").value);
+  if (!isNaN(cr) && !isNaN(s)) {
+    const v = 0.849 * Math.pow(cr, 0.63) * Math.pow(s, 0.54);
+    document.getElementById("vOutput").value = v.toFixed(4);
+  } else {
+    document.getElementById("vOutput").value = "";
+  }
+}
+
+function calculateStaticLevel() {
+  const mvl = parseFloat(document.getElementById("mvlInput").value);
+  const fvl = parseFloat(document.getElementById("fvlInput").value);
+  const terminalHead = parseFloat(document.getElementById("terminalHead").value);
   const slInput = document.getElementById("slInput");
 
-  function updateStaticLevel() {
-    const mvlVal = parseFloat(mvlInput.value);
-    const fvlVal = parseFloat(fvlInput.value);
-
-    if (!isNaN(mvlVal) && !isNaN(fvlVal)) {
-      const slVal =mvlVal-fvlVal;
-      slInput.value = slVal.toFixed(3);
-    } else {
-      slInput.value = "";
-    }
+  if (!isNaN(mvl) && !isNaN(fvl) && !isNaN(terminalHead)) {
+    const staticLevel = fvl - mvl + terminalHead;
+    slInput.value = staticLevel.toFixed(2);
+  } else {
+    slInput.value = "";
   }
+}
 
-  mvlInput.addEventListener("input", updateStaticLevel);
-  fvlInput.addEventListener("input", updateStaticLevel);
+document.getElementById("crInput").addEventListener("input", calculateV);
+document.getElementById("sInput").addEventListener("input", calculateV);
+document.getElementById("mvlInput").addEventListener("input", calculateStaticLevel);
+document.getElementById("fvlInput").addEventListener("input", calculateStaticLevel);
+document.getElementById("terminalHead").addEventListener("input", calculateStaticLevel);
 
-  function updateUnitLabels() {
-    currentUnit = document.getElementById("unit").value;
-    document.getElementById("fromUnit").innerText = currentUnit;
-    document.getElementById("toUnit").innerText = currentUnit;
-    document.getElementById("lengthUnit").innerText = currentUnit;
-    updateAllRows();
+const conversionFactors = { m: 1, km: 0.001, mm: 1000 };
+let currentUnit = "m";
+let rowCount = 0;
+
+function updateUnitLabels() {
+  currentUnit = document.getElementById("unit").value;
+  document.getElementById("fromUnit").innerText = currentUnit;
+  document.getElementById("toUnit").innerText = currentUnit;
+  document.getElementById("lengthUnit").innerText = currentUnit;
+}
+
+function addRow() {
+  rowCount++;
+  const tableBody = document.getElementById("tableBody");
+  const row = document.createElement("tr");
+
+  const type = selectedPipeDetails ? selectedPipeDetails.name.split(" ").slice(-1)[0] : "DI K7CL";
+  const diameter = selectedPipeDetails ? selectedPipeDetails.diameter : "—";
+  const area = selectedPipeDetails ? (Math.PI * Math.pow(diameter / 2000, 2)).toFixed(4) : "—";
+  const vVal = parseFloat(document.getElementById("vOutput").value);
+
+  row.innerHTML = `
+    <td>${rowCount}</td>
+    <td><input type="number" class="from-input"></td>
+    <td><input type="number" class="to-input"></td>
+    <td class="length-cell">—</td>
+    <td class="x-cell">${!isNaN(vVal) ? vVal.toFixed(4) : "—"}</td>
+    <td class="y-cell">—</td>
+    <td>
+      <select>
+        <option value="DI K7CL" ${type === "K7CL" ? "selected" : ""}>DI K7CL</option>
+        <option value="DI K9CL" ${type === "K9CL" ? "selected" : ""}>DI K9CL</option>
+      </select>
+    </td>
+    <td class="a-cell">${diameter}</td>
+    <td class="b-cell">${area}</td>
+    <td class="c-cell">—</td>
+    <td class="d-cell">—</td>
+  `;
+
+  tableBody.appendChild(row);
+
+  row.querySelector(".from-input").addEventListener("input", () => updateRow(row));
+  row.querySelector(".to-input").addEventListener("input", () => updateRow(row));
+}
+
+function updateRow(row) {
+  const fromVal = parseFloat(row.querySelector(".from-input").value);
+  const toVal = parseFloat(row.querySelector(".to-input").value);
+  const lengthCell = row.querySelector(".length-cell");
+  const xCell = row.querySelector(".x-cell");
+  const vVal = parseFloat(document.getElementById("vOutput").value);
+  if (!isNaN(fromVal) && !isNaN(toVal)) {
+    const diff = Math.abs(toVal - fromVal);
+    const converted = diff * conversionFactors[currentUnit];
+    lengthCell.innerText = converted.toFixed(3);
+    xCell.innerText = !isNaN(vVal) ? vVal.toFixed(4) : "—";
+  } else {
+    lengthCell.innerText = xCell.innerText = "—";
   }
+}
 
-  function addRow() {
-    rowCount++;
-    const tableBody = document.getElementById("tableBody");
-    const row = document.createElement("tr");
-
-    row.innerHTML = `
-      <td>${rowCount}</td>
-      <td><input type="number" class="from-input" placeholder="FROM"></td>
-      <td><input type="number" class="to-input" placeholder="TO"></td>
-      <td class="length-cell">—</td>
-      <td class="x-cell">—</td>
-      <td class="y-cell">—</td>
-      <td class="z-cell">—</td>
-      <td class="a-cell">—</td>
-      <td class="b-cell">—</td>
-      <td class="c-cell">—</td>
-      <td class="d-cell">—</td>
-    `;
-
-    tableBody.appendChild(row);
-
-    const fromInput = row.querySelector(".from-input");
-    const toInput = row.querySelector(".to-input");
-
-    fromInput.addEventListener("input", () => updateRow(row));
-    toInput.addEventListener("input", () => updateRow(row));
-  }
-
-  function updateRow(row) {
-    const fromInput = row.querySelector(".from-input");
-    const toInput = row.querySelector(".to-input");
-
-    const fromVal = parseFloat(fromInput.value);
-    const toVal = parseFloat(toInput.value);
-
-    const lengthCell = row.querySelector(".length-cell");
-    const xCell = row.querySelector(".x-cell");
-    const yCell = row.querySelector(".y-cell");
-    const zCell = row.querySelector(".z-cell");
-    const aCell = row.querySelector(".a-cell");
-    const bCell = row.querySelector(".b-cell");
-    const cCell = row.querySelector(".c-cell");
-    const dCell = row.querySelector(".d-cell");
-
-    if (!isNaN(fromVal) && !isNaN(toVal)) {
-      const diffMeters = Math.abs(toVal - fromVal);
-      const converted = diffMeters * conversionFactors[currentUnit];
-
-      lengthCell.innerText = converted.toFixed(3);
-      xCell.innerText = (converted * 1.1).toFixed(2);
-      yCell.innerText = (converted * 0.9).toFixed(2);
-      zCell.innerText = (converted + 5).toFixed(2);
-      aCell.innerText = (converted - 2).toFixed(2);
-      bCell.innerText = (converted / 2).toFixed(2);
-      cCell.innerText = (converted * 3).toFixed(2);
-      dCell.innerText = (Math.sqrt(converted)).toFixed(2);
-    } else {
-      lengthCell.innerText = xCell.innerText = yCell.innerText = zCell.innerText =
-      aCell.innerText = bCell.innerText = cCell.innerText = dCell.innerText = "—";
-    }
-  }
-
-  function updateAllRows() {
-    const rows = document.querySelectorAll("#tableBody tr");
-    rows.forEach(updateRow);
-  }
-
-  updateUnitLabels(); // Initial setup
+updateUnitLabels();
 </script>
-
 </body>
 </html>
